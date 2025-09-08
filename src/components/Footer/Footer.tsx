@@ -9,277 +9,124 @@ import { FooterConfig } from "../../../lib";
 const Footer = () => {
   const footerConfig = footerJson as FooterConfig;
 
-  console.log("footerConfig", footerConfig.subLogoList);
-
   return (
-    <>
-      <div id="footer" className="footer">
-        <div className="footer-main bg-surface">
-          <div className="container">
-            <div className="content-footer py-[60px] flex justify-between flex-wrap gap-y-8">
-              <div className="company-infor basis-1/4 max-lg:basis-full pr-7">
-                <Link href={"/"} className="logo">
-                  <div className="heading4">Anvogue</div>
-                </Link>
-                <div className="flex gap-3 mt-3">
-                  <div className="flex flex-col">
-                    {footerConfig.subLogoList.map((item, idx) => {
-                      // beroende på type, välj rätt href
-                      const href =
-                        item.type === "email"
-                          ? `mailto:${item.content}`
-                          : item.type === "phone"
-                          ? `tel:${item.content}`
-                          : undefined;
+    <div id="footer" className="footer">
+      <div className="footer-main bg-surface">
+        <div className="container">
+          <div className="content-footer py-[60px] flex justify-between flex-wrap gap-y-8">
+            {/* LEFT SIDE - LOGO + CONTACT INFO */}
+            <div className="company-infor basis-1/4 max-lg:basis-full pr-7">
+              <Link href={"/"} className="logo">
+                <div className="heading4">Anvogue</div>
+              </Link>
+              <div className="flex gap-3 mt-3">
+                <div className="flex flex-col">
+                  {footerConfig.subLogoList.map((item, idx) => {
+                    const href =
+                      item.type === "email"
+                        ? `mailto:${item.content}`
+                        : item.type === "phone"
+                        ? `tel:${item.content}`
+                        : undefined;
 
-                      return href ? (
-                        <a
-                          key={idx}
-                          href={href}
-                          className={idx === 0 ? "" : "mt-3"}
-                        >
-                          {item.content}
-                        </a>
-                      ) : (
-                        <span key={idx} className={idx === 0 ? "" : "mt-3"}>
-                          {item.content}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-              <div className="right-content flex flex-wrap gap-y-8 basis-3/4 max-lg:basis-full">
-                <div className="list-nav flex justify-between basis-2/3 max-md:basis-full gap-4">
-                  <div className="item flex flex-col basis-1/3 ">
-                    <div className="text-button-uppercase pb-3">Infomation</div>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit"
-                      href={"/pages/contact"}
-                    >
-                      Contact us
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"#!"}
-                    >
-                      Career
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/my-account"}
-                    >
-                      My Account
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/order-tracking"}
-                    >
-                      Order & Returns
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/pages/faqs"}
-                    >
-                      FAQs
-                    </Link>
-                  </div>
-                  <div className="item flex flex-col basis-1/3 ">
-                    <div className="text-button-uppercase pb-3">Quick Shop</div>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit"
-                      href={"/shop/breadcrumb1"}
-                    >
-                      Women
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/shop/breadcrumb1"}
-                    >
-                      Men
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/shop/breadcrumb1"}
-                    >
-                      Clothes
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/shop/breadcrumb1"}
-                    >
-                      Accessories
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/blog"}
-                    >
-                      Blog
-                    </Link>
-                  </div>
-                  <div className="item flex flex-col basis-1/3 ">
-                    <div className="text-button-uppercase pb-3">
-                      Customer Services
-                    </div>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit"
-                      href={"/pages/faqs"}
-                    >
-                      Orders FAQs
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/pages/faqs"}
-                    >
-                      Shipping
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/pages/faqs"}
-                    >
-                      Privacy Policy
-                    </Link>
-                    <Link
-                      className="caption1 has-line-before duration-300 w-fit pt-2"
-                      href={"/order-tracking"}
-                    >
-                      Return & Refund
-                    </Link>
-                  </div>
-                </div>
-                <div className="newsletter basis-1/3 pl-7 max-md:basis-full max-md:pl-0">
-                  <div className="text-button-uppercase">Newletter</div>
-                  <div className="caption1 mt-3">
-                    Sign up for our newsletter and get 10% off your first
-                    purchase
-                  </div>
-                  <div className="input-block w-full h-[52px] mt-4">
-                    <form className="w-full h-full relative" action="post">
-                      <input
-                        type="email"
-                        placeholder="Enter your e-mail"
-                        className="caption1 w-full h-full pl-4 pr-14 rounded-xl border border-line"
-                        required
-                      />
-                      <button className="w-[44px] h-[44px] bg-black flex items-center justify-center rounded-xl absolute top-1 right-1">
-                        <Icon.ArrowRight size={24} color="#fff" />
-                      </button>
-                    </form>
-                  </div>
-                  <div className="list-social flex items-center gap-6 mt-4">
-                    <Link href={"https://www.facebook.com/"} target="_blank">
-                      <div className="icon-facebook text-2xl text-black"></div>
-                    </Link>
-                    <Link href={"https://www.instagram.com/"} target="_blank">
-                      <div className="icon-instagram text-2xl text-black"></div>
-                    </Link>
-                    <Link href={"https://www.twitter.com/"} target="_blank">
-                      <div className="icon-twitter text-2xl text-black"></div>
-                    </Link>
-                    <Link href={"https://www.youtube.com/"} target="_blank">
-                      <div className="icon-youtube text-2xl text-black"></div>
-                    </Link>
-                    <Link href={"https://www.pinterest.com/"} target="_blank">
-                      <div className="icon-pinterest text-2xl text-black"></div>
-                    </Link>
-                  </div>
+                    return href ? (
+                      <a
+                        key={idx}
+                        href={href}
+                        className={idx === 0 ? "" : "mt-3"}
+                      >
+                        {item.content}
+                      </a>
+                    ) : (
+                      <span
+                        key={idx}
+                        className={idx === 0 ? "" : "mt-3"}
+                      >
+                        {item.content}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>
-            <div className="footer-bottom py-3 flex items-center justify-between gap-5 max-lg:justify-center max-lg:flex-col border-t border-line">
-              <div className="left flex items-center gap-8">
-                <div className="copyright caption1 text-secondary">
-                  ©2023 Anvogue. All Rights Reserved.
-                </div>
-                <div className="select-block flex items-center gap-5 max-md:hidden">
-                  <div className="choose-language flex items-center gap-1.5">
-                    <select
-                      name="language"
-                      id="chooseLanguageFooter"
-                      className="caption2 bg-transparent"
-                    >
-                      <option value="English">English</option>
-                      <option value="Espana">Espana</option>
-                      <option value="France">France</option>
-                    </select>
-                    <Icon.CaretDown size={12} color="#1F1F1F" />
+
+            {/* RIGHT SIDE - NAV GROUPS + NEWSLETTER */}
+            <div className="right-content flex flex-wrap gap-y-8 basis-3/4 max-lg:basis-full">
+              {/* NAV GROUPS */}
+              <div className="list-nav flex justify-between basis-2/3 max-md:basis-full gap-4">
+                {footerConfig.navGroups.map((group, gIdx) => (
+                  <div
+                    key={gIdx}
+                    className="item flex flex-col basis-1/3 "
+                  >
+                    <div className="text-button-uppercase pb-3">
+                      {group.title}
+                    </div>
+                    {group.items.map((nav, nIdx) => (
+                      <Link
+                        key={nIdx}
+                        className={`caption1 has-line-before duration-300 w-fit ${
+                          nIdx === 0 ? "" : "pt-2"
+                        }`}
+                        href={nav.link}
+                      >
+                        {nav.title}
+                      </Link>
+                    ))}
                   </div>
-                  <div className="choose-currency flex items-center gap-1.5">
-                    <select
-                      name="currency"
-                      id="chooseCurrencyFooter"
-                      className="caption2 bg-transparent"
-                    >
-                      <option value="USD">USD</option>
-                      <option value="EUR">EUR</option>
-                      <option value="GBP">GBP</option>
-                    </select>
-                    <Icon.CaretDown size={12} color="#1F1F1F" />
-                  </div>
-                </div>
+                ))}
               </div>
-              <div className="right flex items-center gap-2">
-                <div className="caption1 text-secondary">Payment:</div>
-                <div className="payment-img">
-                  <Image
-                    src={"/images/payment/Frame-0.png"}
-                    width={500}
-                    height={500}
-                    alt={"payment"}
-                    className="w-9"
-                  />
+
+              {/* NEWSLETTER */}
+              <div className="newsletter basis-1/3 pl-7 max-md:basis-full max-md:pl-0">
+                <div className="text-button-uppercase">
+                  {footerConfig.newsLetter.title}
                 </div>
-                <div className="payment-img">
-                  <Image
-                    src={"/images/payment/Frame-1.png"}
-                    width={500}
-                    height={500}
-                    alt={"payment"}
-                    className="w-9"
-                  />
+                <div className="caption1 mt-3">
+                  {footerConfig.newsLetter.description}
                 </div>
-                <div className="payment-img">
-                  <Image
-                    src={"/images/payment/Frame-2.png"}
-                    width={500}
-                    height={500}
-                    alt={"payment"}
-                    className="w-9"
-                  />
-                </div>
-                <div className="payment-img">
-                  <Image
-                    src={"/images/payment/Frame-3.png"}
-                    width={500}
-                    height={500}
-                    alt={"payment"}
-                    className="w-9"
-                  />
-                </div>
-                <div className="payment-img">
-                  <Image
-                    src={"/images/payment/Frame-4.png"}
-                    width={500}
-                    height={500}
-                    alt={"payment"}
-                    className="w-9"
-                  />
-                </div>
-                <div className="payment-img">
-                  <Image
-                    src={"/images/payment/Frame-5.png"}
-                    width={500}
-                    height={500}
-                    alt={"payment"}
-                    className="w-9"
-                  />
+                <div className="input-block w-full h-[52px] mt-4">
+                  <form className="w-full h-full relative" action="post">
+                    <input
+                      type="email"
+                      placeholder={footerConfig.newsLetter.placeholder}
+                      className="caption1 w-full h-full pl-4 pr-14 rounded-xl border border-line"
+                      required
+                    />
+                    <button className="w-[44px] h-[44px] bg-black flex items-center justify-center rounded-xl absolute top-1 right-1">
+                      <Icon.ArrowRight size={24} color="#fff" />
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* FOOTER BOTTOM */}
+          <div className="footer-bottom py-3 flex items-center justify-between gap-5 max-lg:justify-center max-lg:flex-col border-t border-line">
+            <div className="left flex items-center gap-8">
+              <div className="copyright caption1 text-secondary">
+                ©2023 Anvogue. All Rights Reserved.
+              </div>
+            </div>
+            <div className="right flex items-center gap-2">
+              <div className="caption1 text-secondary">Payment:</div>
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="payment-img">
+                  <Image
+                    src={`/images/payment/Frame-${i}.png`}
+                    width={500}
+                    height={500}
+                    alt={"payment"}
+                    className="w-9"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
