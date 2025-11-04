@@ -4,7 +4,7 @@ import Image from "next/image";
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 
 import footerJson from "../../../src/data/footer.json";
-import { FooterConfig } from "../../../lib";
+import { FooterConfig } from "../../lib";
 
 const Footer = () => {
   const footerConfig = footerJson as FooterConfig;
