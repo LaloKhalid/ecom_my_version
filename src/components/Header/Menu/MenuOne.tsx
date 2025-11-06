@@ -3,69 +3,68 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import * as Icon from "@phosphor-icons/react/dist/ssr";
-import { usePathname } from 'next/navigation';
-import Product from '@/components/Product/Product';
+import * as Icon from "@phosphor-icons/react/dist/ssr"
+import { usePathname, useRouter } from 'next/navigation'
+import Product from '@/components/Product/Product'
 import productData from '@/data/Product.json'
-import useLoginPopup from '@/store/useLoginPopup';
-import useMenuMobile from '@/store/useMenuMobile';
-import { useModalCartContext } from '@/context/ModalCartContext';
-import { useModalWishlistContext } from '@/context/ModalWishlistContext';
-import { useModalSearchContext } from '@/context/ModalSearchContext';
-import { useCart } from '@/context/CartContext';
-import { useRouter } from 'next/navigation';
+import useLoginPopup from '@/store/useLoginPopup'
+import useMenuMobile from '@/store/useMenuMobile'
+import { useModalCartContext } from '@/context/ModalCartContext'
+import { useModalWishlistContext } from '@/context/ModalWishlistContext'
+import { useModalSearchContext } from '@/context/ModalSearchContext'
+import { useCart } from '@/context/CartContext'
 
-interface Props {
-    props: string;
+interface MenuOneProps {
+  props: string
+  brands?: { id: string; title: string }[]
 }
 
-const MenuOne: React.FC<Props> = ({ props }) => {
-    const router = useRouter()
-    const pathname = usePathname()
-    let [selectedType, setSelectedType] = useState<string | null>()
-    const { openLoginPopup, handleLoginPopup } = useLoginPopup()
-    const { openMenuMobile, handleMenuMobile } = useMenuMobile()
-    const [openSubNavMobile, setOpenSubNavMobile] = useState<number | null>(null)
-    const { openModalCart } = useModalCartContext()
-    const { cartState } = useCart()
-    const { openModalWishlist } = useModalWishlistContext()
-    const { openModalSearch } = useModalSearchContext()
+export default function MenuOne({ props, brands }: MenuOneProps) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [selectedType, setSelectedType] = useState<string | null>()
+  const { openLoginPopup, handleLoginPopup } = useLoginPopup()
+  const { openMenuMobile, handleMenuMobile } = useMenuMobile()
+  const [openSubNavMobile, setOpenSubNavMobile] = useState<number | null>(null)
+  const { openModalCart } = useModalCartContext()
+  const { cartState } = useCart()
+  const { openModalWishlist } = useModalWishlistContext()
+  const { openModalSearch } = useModalSearchContext()
+  const [fixedHeader, setFixedHeader] = useState(false)
+  const [lastScrollPosition, setLastScrollPosition] = useState(0)
 
-    const handleOpenSubNavMobile = (index: number) => {
-        setOpenSubNavMobile(openSubNavMobile === index ? null : index)
+  const handleOpenSubNavMobile = (index: number) => {
+    setOpenSubNavMobile(openSubNavMobile === index ? null : index)
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      setFixedHeader(scrollPosition > 0 && scrollPosition < lastScrollPosition)
+      setLastScrollPosition(scrollPosition)
     }
 
-    const [fixedHeader, setFixedHeader] = useState(false)
-    const [lastScrollPosition, setLastScrollPosition] = useState(0);
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [lastScrollPosition])
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY;
-            setFixedHeader(scrollPosition > 0 && scrollPosition < lastScrollPosition);
-            setLastScrollPosition(scrollPosition);
-        };
+  const handleGenderClick = (gender: string) => {
+    router.push(`/shop/breadcrumb1?gender=${gender}`)
+  }
 
-        // Gắn sự kiện cuộn khi component được mount
-        window.addEventListener('scroll', handleScroll);
+  const handleCategoryClick = (category: string) => {
+    router.push(`/shop/breadcrumb1?category=${category}`)
+  }
 
-        // Hủy sự kiện khi component bị unmount
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [lastScrollPosition]);
+  const handleTypeClick = (type: string) => {
+    setSelectedType(type)
+    router.push(`/shop/breadcrumb1?type=${type}`)
+  }
 
-    const handleGenderClick = (gender: string) => {
-        router.push(`/shop/breadcrumb1?gender=${gender}`);
-    };
+  // Now you can access `brands` in the return JSX
 
-    const handleCategoryClick = (category: string) => {
-        router.push(`/shop/breadcrumb1?category=${category}`);
-    };
-
-    const handleTypeClick = (type: string) => {
-        setSelectedType(type)
-        router.push(`/shop/breadcrumb1?type=${type}`);
-    };
 
     return (
         <>
@@ -86,6 +85,21 @@ const MenuOne: React.FC<Props> = ({ props }) => {
                                             href="#!"
                                             className={`text-button-uppercase duration-300 h-full flex items-center justify-center gap-1 ${pathname === '/' ? 'active' : ''}`}
                                         >
+                                            {brands && brands.length > 0 && (
+  <ul className="flex space-x-4">
+    {brands.map((brand) => (
+      <li key={brand.id}>
+        <button
+          onClick={() => handleTypeClick(brand.title)}
+          className="hover:underline"
+        >
+          {brand.title}
+        </button>
+      </li>
+    ))}
+  </ul>
+)}
+
                                             Demo
                                         </Link>
                                         <div className="sub-menu py-3 px-5 -left-10 w-max absolute grid grid-cols-4 gap-5 bg-white rounded-b-xl">
@@ -583,6 +597,8 @@ const MenuOne: React.FC<Props> = ({ props }) => {
                                             className={`text-button-uppercase duration-300 h-full flex items-center justify-center ${pathname.includes('/shop/') ? 'active' : ''}`}
                                         >
                                             Shop
+                                            
+
                                         </Link>
                                         <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                                             <div className="container">
@@ -2175,6 +2191,7 @@ const MenuOne: React.FC<Props> = ({ props }) => {
             </div>
         </>
     )
-}
+};
 
-export default MenuOne
+
+

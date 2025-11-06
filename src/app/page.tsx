@@ -31,12 +31,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <>
-      {/* Header */}
-      <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-      <div id="header" className="relative w-full">
-        <MenuOne props="bg-transparent" />
-        <SliderOne />
-      </div>
+      
+{/* Header */}
+<TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
+<div id="header" className="relative w-full">
+  <MenuOne props="bg-transparent" brands={collections} />
+  <SliderOne />
+</div>
 
       {/* Products Section */}
       <section className="p-6">
