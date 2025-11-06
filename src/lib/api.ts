@@ -1,7 +1,11 @@
 import { Product, Collection } from '@/types/api';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const API_KEY = process.env.API_KEY!;
+// Read environment variables safely
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY; // make it public if used on client side
+
+if (!BASE_URL) throw new Error('NEXT_PUBLIC_API_BASE_URL is not defined in .env.local');
+if (!API_KEY) throw new Error('NEXT_PUBLIC_API_KEY is not defined in .env.local');
 
 async function fetchFromAPI<T>(endpoint: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
