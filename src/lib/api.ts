@@ -1,6 +1,6 @@
 // src/lib/api.ts
 
-import { Product, Collection } from '@/types/api'
+import { Product, Collection } from '@/type/api'
 
 // ✅ Environment variables (private, server-side only)
 const BASE_URL = process.env.API_BASE_URL || 'https://xperimental-api-17977816405.europe-west1.run.app'
